@@ -15,8 +15,11 @@ exports.load = function(req, res, next, quizId) {
 };
 
 // GET /quizes
-exports.index = function(req, res) {  
-  models.Quiz.findAll().then(function(quizes) {
+exports.index = function(req, res) { 
+
+   var filtro  = (req.query.search || '').replace(" ", "%");
+   models.Quiz.findAll({where:["pregunta like ?", '%'+filtro+'%'],order:'pregunta ASC'}).then(function(quizes){
+   //models.Quiz.findAll().then(function(quizes) {
       res.render('quizes/index.ejs', {quizes: quizes});
     }); 
 };
