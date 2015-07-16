@@ -33,13 +33,17 @@ var Quiz = sequelize.import(path.join(__dirname,'quiz'));
 exports.Quiz = Quiz; 
 
 // sync crea automaticamente la BD inicializa tabla y base de datos
-sequelize.sync().success(function() {
-    Quiz.count().success(function (count){
+sequelize.sync().then(function() {
+    Quiz.count().then(function (count){
     if(count===0){
          Quiz.create({
                  pregunta: 'Capital de Italia',
                  respuesta: 'Roma'
-         }).success(function(){                
+         });
+         Quiz.create({
+                 pregunta: 'Capital de Portugal',
+                 respuesta: 'Lisboa'
+         }).then(function(){                
                  console.log('Base de datos inicializada');
          });
     };
